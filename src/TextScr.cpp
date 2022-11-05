@@ -1400,8 +1400,25 @@ int TextScriptProc(void)
 					}
 					else
 					{
+					#ifdef FAST_TEXTBOXES
+						signed char prevTsMode = gTS.mode;
+						BOOL bWhitespacesParseDone = FALSE;
+						while (TRUE)
+						{
+						if (gTS.mode != prevTsMode)
+							break;
+					#endif
 						// Get text to print
 						c[0] = gTS.data[gTS.p_read];
+					#ifdef FAST_TEXTBOXES
+						if (c[0] == '<' || c[0] == '\r')
+							break;
+						BOOL bIsWhitespace = c[0] == ' ';
+						if (bWhitespacesParseDone && bIsWhitespace)
+							break;
+						if (!bWhitespacesParseDone && !bIsWhitespace)
+							bWhitespacesParseDone = TRUE;
+					#endif
 
 						if (c[0] & 0x80)
 						{
@@ -1446,6 +1463,9 @@ int TextScriptProc(void)
 							++gTS.line;
 							CheckNewLine();
 						}
+					#ifdef FAST_TEXTBOXES
+						}
+					#endif
 
 						bExit = TRUE;
 					}
@@ -1461,7 +1481,11 @@ int TextScriptProc(void)
 		case 3: // NEW LINE
 			for (i = 0; i < 4; ++i)
 			{
+			#ifdef FAST_TEXTBOXES
+				gTS.ypos_line[i] -= 16;
+			#else
 				gTS.ypos_line[i] -= 4;
+			#endif
 
 				if (gTS.ypos_line[i] == 0)
 					gTS.mode = 1;
