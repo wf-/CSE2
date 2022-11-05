@@ -276,6 +276,10 @@ if(DEBUG_SAVE)
 	target_compile_definitions(CSE2 PRIVATE DEBUG_SAVE)
 endif()
 
+if(FAST_TEXTBOXES)
+	target_compile_definitions(CSE2 PRIVATE FAST_TEXTBOXES)
+endif()
+
 if(LANCZOS_RESAMPLER)
 	target_compile_definitions(CSE2 PRIVATE LANCZOS_RESAMPLER)
 endif()

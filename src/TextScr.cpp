@@ -1403,6 +1403,10 @@ int TextScriptProc(void)
 						// Get text to print
 						c[0] = gTS.data[gTS.p_read];
 
+#ifdef FAST_TEXTBOXES
+						do
+						{
+#endif
 						if (c[0] & 0x80)
 						{
 							c[1] = gTS.data[gTS.p_read + 1];
@@ -1445,7 +1449,15 @@ int TextScriptProc(void)
 							gTS.p_write = 0;
 							++gTS.line;
 							CheckNewLine();
+#ifdef FAST_TEXTBOXES
+							break;
+#endif
 						}
+#ifdef FAST_TEXTBOXES
+						c[0] = gTS.data[gTS.p_read];
+						}
+						while(c[0] != '<' && c[0] != '\r' && c[0] != ' ');
+#endif
 
 						bExit = TRUE;
 					}
@@ -1461,7 +1473,11 @@ int TextScriptProc(void)
 		case 3: // NEW LINE
 			for (i = 0; i < 4; ++i)
 			{
+#ifdef FAST_TEXTBOXES
+				gTS.ypos_line[i] -= 16;
+#else
 				gTS.ypos_line[i] -= 4;
+#endif
 
 				if (gTS.ypos_line[i] == 0)
 					gTS.mode = 1;
