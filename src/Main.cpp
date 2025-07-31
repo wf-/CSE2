@@ -226,16 +226,22 @@ int main(int argc, char *argv[])
 	{
 		case 1:
 		case 2:
+		case 5:
 			// Set window dimensions
 			if (conf.display_mode == 1)
 			{
 				windowWidth = WINDOW_WIDTH;
 				windowHeight = WINDOW_HEIGHT;
 			}
-			else
+			else if (conf.display_mode == 2)
 			{
 				windowWidth = WINDOW_WIDTH * 2;
 				windowHeight = WINDOW_HEIGHT * 2;
+			}
+			else
+			{
+				windowWidth = WINDOW_WIDTH * 4;
+				windowHeight = WINDOW_HEIGHT * 4;
 			}
 
 		#ifdef FIX_MAJOR_BUGS
@@ -247,9 +253,17 @@ int main(int argc, char *argv[])
 					return EXIT_FAILURE;
 				}
 			}
-			else
+			else if (conf.display_mode == 2)
 			{
 				if (!StartDirectDraw(lpWindowName, windowWidth, windowHeight, 1))
+				{
+					Backend_Deinit();
+					return EXIT_FAILURE;
+				}
+			}
+			else
+			{
+				if (!StartDirectDraw(lpWindowName, windowWidth, windowHeight, 3))
 				{
 					Backend_Deinit();
 					return EXIT_FAILURE;
@@ -259,8 +273,10 @@ int main(int argc, char *argv[])
 			// Doesn't handle StartDirectDraw failing
 			if (conf.display_mode == 1)
 				StartDirectDraw(lpWindowName, windowWidth, windowHeight, 0);
-			else
+			else if (conf.display_mode == 2)
 				StartDirectDraw(lpWindowName, windowWidth, windowHeight, 1);
+			else
+				StartDirectDraw(lpWindowName, windowWidth, windowHeight, 3);
 		#endif
 
 			break;

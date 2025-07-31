@@ -195,7 +195,7 @@ int main(int argc, char *argv[])
 
 								ImGui::TableSetColumnIndex(1);
 								ImGui::SetNextItemWidth(-1.0f);
-								const char *items[] = {"Fullscreen 16-bit", "Windowed 320x240", "Windowed 640x480", "Fullscreen 24-bit", "Fullscreen 32-bit"};
+								const char *items[] = {"Fullscreen 16-bit", "Windowed 320x240", "Windowed 640x480", "Fullscreen 24-bit", "Fullscreen 32-bit", "Windowed 1280x960"};
 								ImGui::Combo("", &configuration.display_mode, items, IM_ARRAYSIZE(items));
 								ImGui::Checkbox("Use Joypad", &configuration.bJoystick);
 

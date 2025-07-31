@@ -125,6 +125,11 @@ BOOL StartDirectDraw(const char *title, int width, int height, int lMagnificatio
 			mag = 2;
 			fullscreen = TRUE;
 			break;
+
+		case 3:
+			mag = 4;
+			fullscreen = FALSE;
+			break;
 	}
 
 	framebuffer = RenderBackend_Init(title, width, height, fullscreen);
@@ -721,6 +726,11 @@ void InitTextObject(const char *name)
 			height = 20;
 			width = 10;
 			break;
+
+		case 4:
+			height = 40;
+			width = 20;
+			break;
 	}
 
 	font = LoadFreeTypeFont(path.c_str(), width, height);
@@ -738,6 +748,11 @@ void InitTextObject(const char *name)
 		case 2:
 			bitmap_path = gDataPath + "/Font/font_bitmap_10x20.png";
 			metadata_path = gDataPath + "/Font/font_bitmap_10x20.dat";
+			break;
+
+		case 4:
+			bitmap_path = gDataPath + "/Font/font_bitmap_20x40.png";
+			metadata_path = gDataPath + "/Font/font_bitmap_20x40.dat";
 			break;
 	}
 
